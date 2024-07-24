@@ -27,15 +27,15 @@ func main() {
 	}
 
 	if *selectFlag == 0 {
-		for i, el := range ar.Data {
-			fmt.Printf("%d. %s\n", i+1, el.RusName)
+		for i, v := range ar.Data {
+			fmt.Printf("%d. %s\n", i+1, v.RusName)
 		}
 		os.Exit(0)
 	}
 
 	animeList := make(map[int]string)
-	for i, el := range ar.Data {
-		animeList[i+1] = el.SlugUrl
+	for i, v := range ar.Data {
+		animeList[i+1] = v.SlugUrl
 	}
 
 	ep, err := anilib.GetEpisodes(animeList[*selectFlag])
@@ -44,9 +44,9 @@ func main() {
 	}
 
 	if *episodeFlag == 0 {
-		for i, el := range ep.Episodes {
-			if el.Name != "" {
-				fmt.Printf("%d. %s\n", i+1, el.Name)
+		for i, v := range ep.Episodes {
+			if v.Name != "" {
+				fmt.Printf("%d. %s\n", i+1, v.Name)
 			} else {
 				fmt.Printf("%d. Episode\n", i+1)
 			}
@@ -55,8 +55,8 @@ func main() {
 	}
 
 	episodeList := make(map[int]int)
-	for i, el := range ep.Episodes {
-		episodeList[i+1] = el.ID
+	for i, v := range ep.Episodes {
+		episodeList[i+1] = v.ID
 	}
 
 	vid, err := anilib.GetTeams(episodeList[*episodeFlag])
@@ -67,10 +67,10 @@ func main() {
 
 	ctr := 1
 	if *videoFlag == 0 {
-		for _, el := range vid.Data.Players {
-			if el.Player == "Animelib" {
-				for _, q := range el.Video.Quality {
-					fmt.Printf("%d. %s [%dp]\n", ctr, el.Team.Name, q.Quality)
+		for _, v := range vid.Data.Players {
+			if v.Player == "Animelib" {
+				for _, q := range v.Video.Quality {
+					fmt.Printf("%d. %s [%dp]\n", ctr, v.Team.Name, q.Quality)
 					ctr += 1
 				}
 			}
@@ -80,9 +80,9 @@ func main() {
 	ctr = 1
 	baseUrl := "https://video1.anilib.me/.%D0%B0s/"
 	videoList := make(map[int]string)
-	for _, el := range vid.Data.Players {
-		if el.Player == "Animelib" {
-			for _, q := range el.Video.Quality {
+	for _, v := range vid.Data.Players {
+		if v.Player == "Animelib" {
+			for _, q := range v.Video.Quality {
 				videoList[ctr] = baseUrl + q.HREF
 				ctr += 1
 			}
