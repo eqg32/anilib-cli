@@ -11,7 +11,7 @@ func main() {
 	searchFlag := flag.String("search", "", "Search anime title. Pass this to see if an anime can be played.")
 	selectFlag := flag.Int("select", 0, "Select anime. Specify the number of the desired anime.")
 	episodeFlag := flag.Int("episode", 0, "Select an episode you want to watch.")
-	videoFlag := flag.Int("video", 0, "Select the voiceover you want to get url of.")
+	videoFlag := flag.Int("video", 0, "Select voiceover and quality of the video you want to get url of.")
 
 	flag.Parse()
 
