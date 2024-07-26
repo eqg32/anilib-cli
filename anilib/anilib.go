@@ -8,6 +8,10 @@ import (
 )
 
 func Search(title string) (*AniLibResp, error) {
+	if title == "" {
+		return nil, nil
+	}
+
 	client := http.Client{
 		Timeout: time.Second * 15,
 	}
@@ -34,6 +38,10 @@ func Search(title string) (*AniLibResp, error) {
 }
 
 func GetEpisodes(slugUrl string) (*EpResp, error) {
+	if slugUrl == "" {
+		return nil, nil
+	}
+
 	client := http.Client{
 		Timeout: time.Second * 15,
 	}
@@ -60,6 +68,10 @@ func GetEpisodes(slugUrl string) (*EpResp, error) {
 }
 
 func GetTeams(episodeID int) (*EpisodeData, error) {
+	if episodeID == 0 {
+		return nil, nil
+	}
+
 	client := http.Client{
 		Timeout: 15 * time.Second,
 	}
