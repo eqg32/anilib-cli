@@ -21,7 +21,12 @@ go build .
 ```
 ./anilib-cli -search Evangelion -select 1 -episode 1 -video 4 | mpv --playlist=-
 ```
-Это запустит, `mpv`, который из `stdout` прочтет ссылку, выданную программой
+Это запустит, `mpv`, который из `stdout` прочтет ссылку, выданную программой.
+
+Теперь можно дописать флаг `-mpv` вместо `| mpv --playlist=-`:
+```
+./anilib-cli -search Evangelion -select 1 -episode 1 -video 4 -mpv
+```
 
 Если хотите просто поискать по названию, то команда будет выглядеть как-то так:
 ```
