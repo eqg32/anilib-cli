@@ -5,6 +5,7 @@ import (
 	"flag"
 	"fmt"
 	"os"
+	"os/exec"
 )
 
 func main() {
@@ -12,6 +13,7 @@ func main() {
 	selectFlag := flag.Int("select", 0, "Select anime. Specify the number of the desired anime.")
 	episodeFlag := flag.Int("episode", 0, "Select an episode you want to watch.")
 	videoFlag := flag.Int("video", 0, "Select voiceover and quality of the video you want to get url of.")
+	mpvFlag := flag.Bool("mpv", false, "Use mpv to open watch an episode")
 
 	flag.Parse()
 
@@ -89,5 +91,13 @@ func main() {
 		}
 	}
 
-	fmt.Fprintf(os.Stdout, "%s", videoList[*videoFlag])
+	if *mpvFlag {
+		cmd := exec.Command("mpv", videoList[*videoFlag])
+		err := cmd.Run()
+		if err != nil {
+			fmt.Printf("%v\n", err)
+		}
+	} else {
+		fmt.Fprintf(os.Stdout, "%s", videoList[*videoFlag])
+	}
 }
