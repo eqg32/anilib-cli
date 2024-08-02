@@ -10,7 +10,7 @@ import (
 
 func main() {
 	searchFlag := flag.String("search", "", "Search anime title. Pass this to see if an anime can be played.")
-	selectFlag := flag.Int("select", 0, "Select anime. Specify the number of the desired anime.")
+	animeFlag := flag.Int("anime", 0, "Select anime. Specify the number of the desired anime.")
 	episodeFlag := flag.Int("episode", 0, "Select an episode you want to watch.")
 	videoFlag := flag.Int("video", 0, "Select voiceover and quality of the video you want to get url of.")
 	mpvFlag := flag.Bool("mpv", false, "Use mpv to open watch an episode")
@@ -28,7 +28,7 @@ func main() {
 		os.Exit(1)
 	}
 
-	if *selectFlag == 0 {
+	if *animeFlag == 0 {
 		for i, v := range ar.Data {
 			fmt.Printf("%d. %s\n", i+1, v.RusName)
 		}
@@ -40,7 +40,7 @@ func main() {
 		animeList[i+1] = v.SlugUrl
 	}
 
-	ep, err := anilib.GetEpisodes(animeList[*selectFlag])
+	ep, err := anilib.GetEpisodes(animeList[*animeFlag])
 	if err != nil {
 		fmt.Printf("%v\n", err)
 	}
