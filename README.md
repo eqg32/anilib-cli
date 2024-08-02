@@ -20,14 +20,14 @@ go build .
 Вот два примера включения первой серии Евангелиона:
 ```
 # mpv
-./anilib-cli -search Evangelion -select 1 -episode 1 -video 4 | mpv --playlist=-
+./anilib-cli -search Evangelion -anime 1 -episode 1 -video 4 | mpv --playlist=-
 # vlc
-vlc $(sh -c "./anilib-cli -search Evangelion -select 1 -episode 1 -video 4")
+vlc $(sh -c "./anilib-cli -search Evangelion -anime 1 -episode 1 -video 4")
 ```
 
 Теперь можно дописать флаг `-mpv` вместо `| mpv --playlist=-`:
 ```
-./anilib-cli -search Evangelion -select 1 -episode 1 -video 4 -mpv
+./anilib-cli -search Evangelion -anime 1 -episode 1 -video 4 -mpv
 ```
 
 Если хотите просто поискать по названию, то команда будет выглядеть как-то так:
