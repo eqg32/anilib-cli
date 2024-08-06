@@ -13,7 +13,7 @@ const usageMessage = `Usage of anilib-cli:
 	-a, --anime      specify the number of the desired anime
 	-e, --episode    specify the number of the disired episode
 	-v, --video      specify the number of the desired voiceover and video quality
-	-m, --mpv        use mpv
+	-p, --player     specify the player you want to use
 	-h, --help       display this message`
 
 var (
@@ -21,7 +21,7 @@ var (
 	anime   int
 	episode int
 	video   int
-	useMpv  bool
+	player  string
 )
 
 func main() {
@@ -37,8 +37,8 @@ func main() {
 	flag.IntVar(&video, "video", 0, "specify the number of the desired voiceover and video quality")
 	flag.IntVar(&video, "v", 0, "specify the number of the desired voiceover and video quality")
 
-	flag.BoolVar(&useMpv, "mpv", false, "use mpv")
-	flag.BoolVar(&useMpv, "m", false, "use mpv")
+	flag.StringVar(&player, "player", "", "specify the player you want to use")
+	flag.StringVar(&player, "p", "", "specify the player you want to use")
 
 	flag.Usage = func() { fmt.Println(usageMessage) }
 	flag.Parse()
@@ -117,8 +117,8 @@ func main() {
 		}
 	}
 
-	if useMpv {
-		cmd := exec.Command("mpv", videoList[video])
+	if player != "" {
+		cmd := exec.Command(player, videoList[video])
 		err := cmd.Run()
 		if err != nil {
 			fmt.Printf("%v", err)
