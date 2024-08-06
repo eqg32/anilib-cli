@@ -19,16 +19,15 @@ go build .
 В конечном итоге эта программка выдает просто ссылку на видео. Чтоб это видео проиграть, нужен плеер. Сойдет `mpv`, `vlc` и тд.
 Вот два примера включения первой серии Евангелиона:
 ```bash
-# mpv
+# просто выдаст ссылку
+./anilib-cli --search Evangelion --anime 1 --episode 1 --video 4
+# начнет играть видео в mpv
 ./anilib-cli --search Evangelion --anime 1 --episode 1 --video 4 | mpv --playlist=-
-# vlc
-vlc $(sh -c "./anilib-cli --search Evangelion --anime 1 --episode 1 --video 4")
+# или
+./anilib-cli --search Evangelion --anime 1 --episode 1 --video 4 --player mpv
 ```
 
-Теперь можно дописать флаг `--mpv` вместо `| mpv --playlist=-`:
-```bash
-./anilib-cli --search Evangelion --anime 1 --episode 1 --video 4 --mpv
-```
+С флагом `--player` можно использовать любой плеер, который поддерживает запуск из консоли по типу `mpv [url]`.
 
 Если хотите просто поискать по названию, то команда будет выглядеть как-то так:
 ```bash
