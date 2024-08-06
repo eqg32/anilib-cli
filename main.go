@@ -8,27 +8,35 @@ import (
 	"os/exec"
 )
 
+var (
+	search  string
+	anime   int
+	episode int
+	video   int
+	useMpv  bool
+)
+
 func main() {
-	searchFlag := flag.String("search", "", "Search anime title. Pass this to see if an anime can be played.")
-	animeFlag := flag.Int("anime", 0, "Select anime. Specify the number of the desired anime.")
-	episodeFlag := flag.Int("episode", 0, "Select an episode you want to watch.")
-	videoFlag := flag.Int("video", 0, "Select voiceover and quality of the video you want to get url of.")
-	mpvFlag := flag.Bool("mpv", false, "Use mpv to open watch an episode")
+	flag.StringVar(&search, "search", "", "Search anime title. Pass this to see if an anime can be played.")
+	flag.IntVar(&anime, "anime", 0, "Select anime. Specify the number of the desired anime.")
+	flag.IntVar(&episode, "episode", 0, "Select an episode you want to watch.")
+	flag.IntVar(&video, "video", 0, "Select voiceover and quality of the video you want to get url of.")
+	flag.BoolVar(&useMpv, "mpv", false, "Use mpv to open watch an episode")
 
 	flag.Parse()
 
-	if *searchFlag == "" {
+	if search == "" {
 		fmt.Printf("No title specified!\n")
 		os.Exit(0)
 	}
 
-	ar, err := anilib.Search(*searchFlag)
+	ar, err := anilib.Search(search)
 	if err != nil {
 		fmt.Printf("%v\n", err)
 		os.Exit(1)
 	}
 
-	if *animeFlag == 0 {
+	if anime == 0 {
 		for i, v := range ar.Data {
 			fmt.Printf("%d. %s\n", i+1, v.RusName)
 		}
@@ -40,12 +48,12 @@ func main() {
 		animeList[i+1] = v.SlugUrl
 	}
 
-	ep, err := anilib.GetEpisodes(animeList[*animeFlag])
+	ep, err := anilib.GetEpisodes(animeList[anime])
 	if err != nil {
 		fmt.Printf("%v\n", err)
 	}
 
-	if *episodeFlag == 0 {
+	if episode == 0 {
 		for i, v := range ep.Episodes {
 			if v.Name != "" {
 				fmt.Printf("%d. %s\n", i+1, v.Name)
@@ -61,14 +69,14 @@ func main() {
 		episodeList[i+1] = v.ID
 	}
 
-	vid, err := anilib.GetTeams(episodeList[*episodeFlag])
+	vid, err := anilib.GetTeams(episodeList[episode])
 	if err != nil {
 		fmt.Printf("%v\n", err)
 		os.Exit(1)
 	}
 
 	ctr := 1
-	if *videoFlag == 0 {
+	if video == 0 {
 		for _, v := range vid.Data.Players {
 			if v.Player == "Animelib" {
 				for _, q := range v.Video.Quality {
@@ -91,13 +99,13 @@ func main() {
 		}
 	}
 
-	if *mpvFlag {
-		cmd := exec.Command("mpv", videoList[*videoFlag])
+	if useMpv {
+		cmd := exec.Command("mpv", videoList[video])
 		err := cmd.Run()
 		if err != nil {
 			fmt.Printf("%v\n", err)
 		}
 	} else {
-		fmt.Fprintf(os.Stdout, "%s", videoList[*videoFlag])
+		fmt.Printf("%s", videoList[video])
 	}
 }
