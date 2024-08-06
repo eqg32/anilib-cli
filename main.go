@@ -8,6 +8,14 @@ import (
 	"os/exec"
 )
 
+const usageMessage = `Usage of anilib-cli:
+	-s, --search     search anime title
+	-a, --anime      specify the number of the desired anime
+	-e, --episode    specify the number of the disired episode
+	-v, --video      specify the number of the desired voiceover and video quality
+	-m, --mpv        use mpv
+	-h, --help       display this message`
+
 var (
 	search  string
 	anime   int
@@ -17,12 +25,22 @@ var (
 )
 
 func main() {
-	flag.StringVar(&search, "search", "", "Search anime title. Pass this to see if an anime can be played.")
-	flag.IntVar(&anime, "anime", 0, "Select anime. Specify the number of the desired anime.")
-	flag.IntVar(&episode, "episode", 0, "Select an episode you want to watch.")
-	flag.IntVar(&video, "video", 0, "Select voiceover and quality of the video you want to get url of.")
-	flag.BoolVar(&useMpv, "mpv", false, "Use mpv to open watch an episode")
+	flag.StringVar(&search, "search", "", "search anime title")
+	flag.StringVar(&search, "s", "", "search anime title")
 
+	flag.IntVar(&anime, "anime", 0, "specify the number of the desired anime")
+	flag.IntVar(&anime, "a", 0, "specify the number of the desired anime")
+
+	flag.IntVar(&episode, "episode", 0, "specify the number of the disired episode")
+	flag.IntVar(&episode, "e", 0, "specify the number of the disired episode")
+
+	flag.IntVar(&video, "video", 0, "specify the number of the desired voiceover and video quality")
+	flag.IntVar(&video, "v", 0, "specify the number of the desired voiceover and video quality")
+
+	flag.BoolVar(&useMpv, "mpv", false, "use mpv")
+	flag.BoolVar(&useMpv, "m", false, "use mpv")
+
+	flag.Usage = func() { fmt.Println(usageMessage) }
 	flag.Parse()
 
 	if search == "" {
