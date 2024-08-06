@@ -32,7 +32,7 @@ func main() {
 
 	ar, err := anilib.Search(search)
 	if err != nil {
-		fmt.Printf("%v\n", err)
+		fmt.Printf("%v", err)
 		os.Exit(1)
 	}
 
@@ -50,7 +50,7 @@ func main() {
 
 	ep, err := anilib.GetEpisodes(animeList[anime])
 	if err != nil {
-		fmt.Printf("%v\n", err)
+		fmt.Printf("%v", err)
 	}
 
 	if episode == 0 {
@@ -71,7 +71,7 @@ func main() {
 
 	vid, err := anilib.GetTeams(episodeList[episode])
 	if err != nil {
-		fmt.Printf("%v\n", err)
+		fmt.Printf("%v", err)
 		os.Exit(1)
 	}
 
@@ -103,7 +103,7 @@ func main() {
 		cmd := exec.Command("mpv", videoList[video])
 		err := cmd.Run()
 		if err != nil {
-			fmt.Printf("%v\n", err)
+			fmt.Printf("%v", err)
 		}
 	} else {
 		fmt.Printf("%s", videoList[video])
