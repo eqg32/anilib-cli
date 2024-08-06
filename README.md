@@ -25,7 +25,7 @@ go build .
 vlc $(sh -c "./anilib-cli --search Evangelion --anime 1 --episode 1 --video 4")
 ```
 
-Теперь можно дописать флаг `-mpv` вместо `| mpv --playlist=-`:
+Теперь можно дописать флаг `--mpv` вместо `| mpv --playlist=-`:
 ```bash
 ./anilib-cli --search Evangelion --anime 1 --episode 1 --video 4 --mpv
 ```
